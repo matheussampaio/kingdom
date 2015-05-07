@@ -1,0 +1,5 @@
+<input ng-model="kingdomBestCtrl.KingdomBestService.searchDeep"></input>
+<button ng-click="kingdomBestCtrl.KingdomBestService.searchBest()">Best</button>
+<ul>
+    <li ng-repeat='e in kingdomBestCtrl.KingdomBestService.bestResult track by $index'>{{e}}</li>
+</ul>
