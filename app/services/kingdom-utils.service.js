@@ -3,13 +3,14 @@
 
     angular
         .module('kingdom.services')
-        .service('KingdomUtils', KingdomUtils);
+        .service('KingdomUtilsService', KingdomUtilsService);
 
-    function KingdomUtils() {
+    function KingdomUtilsService() {
         var service = {
             'makeMove': makeMove,
             'getMoves': getMoves,
-            'copy': copy
+            'copy': copy,
+            'order': ['W', 'S', 'G', 'T', 'P', 'H', 'F']
         };
 
         return service;

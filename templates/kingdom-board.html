@@ -1,8 +1,10 @@
-<div class="kingdom turns" ng-show="kingdomBoardCtrl.KingdomGame.turns">
+<div class="kingdom board cell" ng-repeat="cell in kingdomBoardCtrl.order"  ng-class="cell"></div>
+
+<div class="kingdom turns" ng-show="kingdomBoardCtrl.KingdomGameService.turns">
     {{kingdomBoardCtrl.KingdomGame.turns}} Turns
 </div>
 
-<div class="kingdom board row" ng-repeat="row in kingdomBoardCtrl.KingdomGame.board track by $index">
+<div class="kingdom board row" ng-repeat="row in kingdomBoardCtrl.KingdomGameService.board track by $index">
     <div class="kingdom board cell"
          ng-repeat="cell in row track by $index"
          ng-class="cell"

@@ -3,9 +3,9 @@
 
     angular
         .module('kingdom.services')
-        .service('KingdomAlgorithms', KingdomAlgorithms);
+        .service('KingdomAlgorithmsService', KingdomAlgorithmsService);
 
-    function KingdomAlgorithms() {
+    function KingdomAlgorithmsService() {
         var service = {
             'gravity': gravity,
             'consume': consume,
@@ -14,13 +14,7 @@
 
         return service;
 
-        function digest(board, production, next, changes) {
-            console.log('start digest');
-
-            if (changes === undefined) {
-                changes = 0;
-            }
-
+        function digest(board, production, next, changes = 0) {
             consume(board, production, function(consumeChange, board, production) {
                 if (consumeChange) {
                     gravity(board, function(board) {
@@ -31,12 +25,9 @@
                 }
             });
 
-            console.log('end digest');
         }
 
         function gravity(board, next) {
-            console.log('start gravity');
-
             for (var col = 0; col < 8; col++) {
                 var colElements = [];
                 for (var row = 0; row < 8; row++) {
@@ -54,20 +45,15 @@
                 }
             }
 
-            console.log('end gravity');
             next(board);
         }
 
         function consume(board, production, next) {
-            console.log('start consume');
-
             consumeRow(board, production, function(consumeRowChanged, board, production) {
                 consumeColumn(board, production, function(consumeColumnChanged, board, production) {
                     next(consumeRowChanged || consumeColumnChanged, board, production);
                 });
             });
-
-            console.log('end consume');
         }
 
         function consumeColumn(board, production, next) {
@@ -120,7 +106,6 @@
             for (var i=0; i < 8; i++) {
                 for (var j=0; j < 7; j++) {
                     if (board[i][j] !== '' && board[i][j] === board[i][j+1]) {
-                        console.log('c:' + i + ',' + j);
                         if (start === -1) {
                             start = j;
                         }
@@ -160,7 +145,5 @@
             next(consumeRowChanged, board, production);
         }
     }
-
-
 
 })();

@@ -14,16 +14,16 @@
         };
     }
 
-    function KingdomBoardController(KingdomGame) {
-        var order = ['W', 'S', 'G', 'T', 'P', 'H', 'F'];
+    function KingdomBoardController(KingdomGameService, KingdomUtilsService) {
+        this.order = KingdomUtilsService.order;
 
-        this.swap = function (y, x) {
-            var currentIndex = order.indexOf(KingdomGame.board[y][x]);
-            var nextIndex = (currentIndex + 1) % order.length;
-            KingdomGame.board[y][x] = order[nextIndex];
+        this.swap = (y, x) => {
+            var currentIndex = this.order.indexOf(KingdomGameService.board[y][x]);
+            var nextIndex = (currentIndex + 1) % this.order.length;
+            KingdomGameService.board[y][x] = this.order[nextIndex];
         };
 
-        this.KingdomGame = KingdomGame;
+        this.KingdomGameService = KingdomGameService;
     }
 
 })();

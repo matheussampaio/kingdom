@@ -1,5 +1,17 @@
 <input ng-model="kingdomBestCtrl.KingdomBestService.searchDeep"></input>
 <button ng-click="kingdomBestCtrl.KingdomBestService.searchBest()">Best</button>
-<ul>
-    <li ng-repeat='e in kingdomBestCtrl.KingdomBestService.bestResult track by $index'>{{e}}</li>
-</ul>
+<!--<ul>-->
+    <!--<li ng-repeat='e in kingdomBestCtrl.KingdomBestService.bestResult track by $index'>{{e}}</li>-->
+<!--</ul>-->
+
+<kingdom-best-result result="kingdomBestCtrl.KingdomBestService.bestResult.child"></kingdom-best-result>
+
+<!--<div ng-repeat="(key, value) in kingdomBestCtrl.KingdomBestService.bestResult.child">-->
+    <!--{{key}} : Total = {{value.total}}-->
+    <!--<div class="indent" ng-repeat="(ckey, cvalue) in value.child">-->
+        <!--{{ckey}} : Total = {{cvalue.total}}-->
+        <!--<div class="indent" ng-repeat="(cckey, ccvalue) in cvalue.child">-->
+            <!--{{cckey}} : Total = {{ccvalue.total}}-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
