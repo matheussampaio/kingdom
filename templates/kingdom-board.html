@@ -1,7 +1,12 @@
-<div class="kingdom turns" ng-show="KingdomGame.turns">
-    {{KingdomGame.turns}} Turns
+<div class="kingdom turns" ng-show="kingdomBoardCtrl.KingdomGame.turns">
+    {{kingdomBoardCtrl.KingdomGame.turns}} Turns
 </div>
 
-<div class="kingdom board row" ng-repeat="row in KingdomGame.board track by $index">
-    <div class="kingdom board cell" ng-repeat="cell in row track by $index" ng-class="cell" title="{{$parent.$index}},{{$index}}"></div>
+<div class="kingdom board row" ng-repeat="row in kingdomBoardCtrl.KingdomGame.board track by $index">
+    <div class="kingdom board cell"
+         ng-repeat="cell in row track by $index"
+         ng-class="cell"
+         ng-click="kingdomBoardCtrl.swap($parent.$index, $index)"
+         title="{{$parent.$index}},{{$index}}">
+    </div>
 </div>

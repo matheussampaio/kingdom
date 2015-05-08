@@ -5,15 +5,25 @@
         .module('kingdom.directives')
         .directive('kingdomBoard', KingdomBoard);
 
-    function KingdomBoard(KingdomGame) {
+    function KingdomBoard() {
         return {
             restrict: 'E',
-            templateUrl: 'templates/kingdom-board.html',
-            scope: {},
-            link: function ($scope) {
-                $scope.KingdomGame = KingdomGame;
-            }
+            controller: KingdomBoardController,
+            controllerAs: 'kingdomBoardCtrl',
+            templateUrl: 'templates/kingdom-board.html'
         };
+    }
+
+    function KingdomBoardController(KingdomGame) {
+        var order = ['W', 'S', 'G', 'T', 'P', 'H', 'F'];
+
+        this.swap = function (y, x) {
+            var currentIndex = order.indexOf(KingdomGame.board[y][x]);
+            var nextIndex = (currentIndex + 1) % order.length;
+            KingdomGame.board[y][x] = order[nextIndex];
+        };
+
+        this.KingdomGame = KingdomGame;
     }
 
 })();
