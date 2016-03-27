@@ -10,17 +10,21 @@
   function KingdomBoardController(KingdomGameService, KingdomUtilsService) {
     const vm = this;
 
-    vm.swap = swap;
+    // vm.swap = swap;
     vm.order = KingdomUtilsService.order;
     vm.KingdomGameService = KingdomGameService;
 
+    vm.setCells = KingdomGameService.setCells;
+    vm.toggleCell = KingdomGameService.toggleCell;
+    vm.isSelected = KingdomGameService.isSelected;
+
     ////////////////
 
-    function swap(y, x) {
-      const currentIndex = this.order.indexOf(KingdomGameService.board[y][x]);
-      const nextIndex = (currentIndex + 1) % this.order.length;
-      KingdomGameService.board[y][x] = this.order[nextIndex];
-    }
+    // function swap(y, x) {
+    //   const currentIndex = vm.order.indexOf(KingdomGameService.board[y][x]);
+    //   const nextIndex = (currentIndex + 1) % vm.order.length;
+    //   KingdomGameService.board[y][x] = vm.order[nextIndex];
+    // }
 
   }
 

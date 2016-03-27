@@ -1,14 +1,20 @@
-<div class="cell" ng-repeat="cell in $ctrl.order"  ng-class="cell"></div>
+<table class="board" align="center">
+  <tr>
+    <td class="cell" ng-repeat="cell in $ctrl.order" ng-click="$ctrl.setCells(cell)" ng-class="cell"></td>
+  </tr>
+</table>
 
-<div ng-show="$ctrl.KingdomGameService.turns">
-    {{$ctrl.KingdomGame.turns}} Turns
-</div>
+<hr>
 
-<div ng-repeat="row in $ctrl.KingdomGameService.board track by $index">
-    <div class="cell"
-         ng-repeat="type in row track by $index"
-         ng-class="type"
-         ng-click="$ctrl.swap($parent.$index, $index)"
-         title="{{$parent.$index}},{{$index}}">
-    </div>
-</div>
+<table class="board" align="center">
+  <tr ng-repeat="row in $ctrl.KingdomGameService.board track by $index">
+    <td class="cell"
+      ng-repeat="type in row track by $index"
+      ng-class="[type, { selected: $ctrl.isSelected($parent.$index, $index) }]"
+
+      ng-click="$ctrl.toggleCell($parent.$index, $index)"
+      title="{{ $parent.$index }}, {{ $index }}"></td>
+  </tr>
+</table>
+
+<hr>

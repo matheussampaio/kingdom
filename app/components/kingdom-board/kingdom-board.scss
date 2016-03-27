@@ -1,0 +1,51 @@
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+table {
+  align: center;
+}
+
+.cell {
+  height: 40px;
+  width: 40px;
+  display: inline-block;
+  background: #ccc;
+  background-repeat: no-repeat;
+  background-size: 75%;
+  background-position: center;
+
+  &.f {
+    background-image: url('../images/food.gif');
+  }
+
+  &.g {
+    background-image: url('../images/gold.gif');
+  }
+
+  &.w {
+    background-image: url('../images/wood.gif');
+  }
+
+  &.s {
+    background-image: url('../images/sword.png');
+  }
+
+  &.p {
+    background-image: url('../images/people.gif');
+  }
+
+  &.h {
+    background-image: url('../images/hammer.gif');
+  }
+
+  &.t {
+    background-image: url('../images/turn.gif');
+  }
+
+  &.selected {
+    border: 1px solid red;
+  }
+
+}
