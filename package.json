@@ -34,7 +34,7 @@
   },
   "scripts": {
     "postinstall": "gulp build",
-    "start": "node server.js"
+    "start": "node dist/server.js"
   },
   "dependencies": {
     "angular": "1.5.3",

@@ -5,3 +5,4 @@ www/
 .publish/
 
 .DS_Store
+*.log
