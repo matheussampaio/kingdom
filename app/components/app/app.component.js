@@ -7,8 +7,7 @@
       templateUrl: 'app/app.html'
     });
 
-  function AppController($log) {
-    $log.debug('app component');
+  function AppController() {
   }
 
 })();

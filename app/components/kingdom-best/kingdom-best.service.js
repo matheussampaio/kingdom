@@ -5,10 +5,10 @@
     .service('KingdomBestService', KingdomBestService);
 
   function KingdomBestService(KingdomGameService, KingdomUtilsService, KingdomAlgorithmsService) {
-    var service = {
-      'bestResult': {},
-      'searchBest': searchBest,
-      'searchDeep': 1
+    const service = {
+      bestResult: {},
+      searchBest: searchBest,
+      searchDeep: 1
     };
 
     return service;
@@ -20,24 +20,24 @@
     }
 
     function bestDeep(deep, board, production = {}) {
-      for (var i = 0; i < KingdomUtilsService.getMoves()
+      for (let i = 0; i < KingdomUtilsService.getMoves()
         .length; i++) {
-        var tBoard = KingdomUtilsService.copy(board);
-        var boardMoved = KingdomUtilsService.makeMove(tBoard, KingdomUtilsService.getMoves()[i]);
+        const tBoard = KingdomUtilsService.copy(board);
+        const boardMoved = KingdomUtilsService.makeMove(tBoard, KingdomUtilsService.getMoves()[i]);
 
-        var move = JSON.stringify(KingdomUtilsService.getMoves()[i]);
+        const move = angular.toJson(KingdomUtilsService.getMoves()[i]);
 
-        KingdomAlgorithmsService.digest(boardMoved, {}, function (pBoard, pResult, pChanges) {
+        KingdomAlgorithmsService.digest(boardMoved, {}, (pBoard, pResult, pChanges) => {
 
           if (pChanges > 0) {
             production.child = production.child ? production.child : {};
             production.total = production.total ? production.total : {};
 
-            var tTotal = {};
+            const tTotal = {};
 
-            for (let e of KingdomUtilsService.order) {
-              let eTotal = production.total[e] ? production.total[e] : 0;
-              let eResult = pResult[e] ? pResult[e] : 0;
+            for (const e of KingdomUtilsService.order) {
+              const eTotal = production.total[e] ? production.total[e] : 0;
+              const eResult = pResult[e] ? pResult[e] : 0;
 
               if (eTotal + eResult > 0) {
                 tTotal[e] = eTotal + eResult;

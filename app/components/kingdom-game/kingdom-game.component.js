@@ -8,8 +8,6 @@
     });
 
   function KingdomGameController(KingdomGameService) {
-    console.log('game');
-
     const vm = this;
 
     vm.KingdomGameService = KingdomGameService;

@@ -8,7 +8,6 @@
     });
 
   function homeController() {
-    console.log('home');
   }
 
 })();

@@ -5,31 +5,34 @@
     .service('KingdomAlgorithmsService', KingdomAlgorithmsService);
 
   function KingdomAlgorithmsService() {
-    var service = {
-      'gravity': gravity,
-      'consume': consume,
-      'digest': digest
+    const service = {
+      gravity: gravity,
+      consume: consume,
+      digest: digest
     };
 
     return service;
 
-    function digest(board, production, next, changes = 0) {
-      consume(board, production, function (consumeChange, board, production) {
+    //////////////////
+
+    function digest(board1, production, next, changes = 0) {
+      consume(board1, production, (consumeChange, board2, production2) => {
         if (consumeChange) {
-          gravity(board, function (board) {
-            digest(board, production, next, changes + 1);
+          gravity(board2, (board3) => {
+            digest(board3, production2, next, changes + 1);
           });
         } else {
-          next(board, production, changes);
+          next(board2, production2, changes);
         }
       });
 
     }
 
     function gravity(board, next) {
-      for (var col = 0; col < 8; col++) {
-        var colElements = [];
-        for (var row = 0; row < 8; row++) {
+      for (let col = 0; col < 8; col++) {
+        const colElements = [];
+
+        for (let row = 0; row < 8; row++) {
           if (board[row][col] !== '') {
             colElements.push(board[row][col]);
           }
@@ -39,7 +42,7 @@
           colElements.unshift('');
         }
 
-        for (var i = 0; i < 8; i++) {
+        for (let i = 0; i < 8; i++) {
           board[i][col] = colElements[i];
         }
       }
@@ -48,19 +51,20 @@
     }
 
     function consume(board, production, next) {
-      consumeRow(board, production, function (consumeRowChanged, board, production) {
-        consumeColumn(board, production, function (consumeColumnChanged, board, production) {
-          next(consumeRowChanged || consumeColumnChanged, board, production);
+      consumeRow(board, production, (consumeRowChanged, board2, production2) => {
+        consumeColumn(board2, production2, (consumeColumnChanged, board3, production3) => {
+          next(consumeRowChanged || consumeColumnChanged, board3, production3);
         });
       });
     }
 
     function consumeColumn(board, production, next) {
-      var consumeColumnChanged = false;
-      var start = -1;
-      var count = 1;
-      for (var i = 0; i < 8; i++) {
-        for (var j = 0; j < 7; j++) {
+      let consumeColumnChanged = false;
+      let start = -1;
+      let count = 1;
+
+      for (let i = 0; i < 8; i++) {
+        for (let j = 0; j < 7; j++) {
           if (board[j][i] !== '' && board[j][i] === board[j + 1][i]) {
             if (start === -1) {
               start = j;
@@ -69,8 +73,13 @@
 
           } else {
             if (count >= 3) {
-              production[board[j][i]] = production[board[j][i]] === undefined ? count : production[board[j][i]] + count;
-              for (var k = start; k < start + count; k++) {
+              if (production[board[j][i]]) {
+                production[board[j][i]] += count;
+              } else {
+                production[board[j][i]] = count;
+              }
+
+              for (let k = start; k < start + count; k++) {
                 board[k][i] = '';
               }
 
@@ -82,9 +91,17 @@
           }
         }
 
+        const j = 7;
+
         if (count >= 3) {
-          production[board[j][i]] = production[board[j][i]] === undefined ? count : production[board[j][i]] + count;
-          for (var w = start; w < start + count; w++) {
+
+          if (production[board[j][i]]) {
+            production[board[j][i]] += count;
+          } else {
+            production[board[j][i]] = count;
+          }
+
+          for (let w = start; w < start + count; w++) {
             board[w][i] = '';
           }
 
@@ -98,12 +115,13 @@
     }
 
     function consumeRow(board, production, next) {
-      var consumeRowChanged = false;
+      let consumeRowChanged = false;
       // Consume ROW
-      var start = -1;
-      var count = 1;
-      for (var i = 0; i < 8; i++) {
-        for (var j = 0; j < 7; j++) {
+      let start = -1;
+      let count = 1;
+
+      for (let i = 0; i < 8; i++) {
+        for (let j = 0; j < 7; j++) {
           if (board[i][j] !== '' && board[i][j] === board[i][j + 1]) {
             if (start === -1) {
               start = j;
@@ -112,9 +130,13 @@
 
           } else {
             if (count >= 3) {
-              production[board[i][j]] = production[board[i][j]] === undefined ? count : production[board[i][j]] + count;
+              if (production[board[i][j]]) {
+                production[board[i][j]] += count;
+              } else {
+                production[board[i][j]] = count;
+              }
 
-              for (var k = start; k < start + count; k++) {
+              for (let k = start; k < start + count; k++) {
                 board[i][k] = '';
               }
 
@@ -126,11 +148,18 @@
           }
         }
 
+        const j = 7;
+
         if (count >= 3) {
           // remove elements and add production
-          production[board[i][j]] = production[board[i][j]] === undefined ? count : production[board[i][j]] + count;
 
-          for (var w = start; w < start + count; w++) {
+          if (production[board[i][j]]) {
+            production[board[i][j]] += count;
+          } else {
+            production[board[i][j]] = count;
+          }
+
+          for (let w = start; w < start + count; w++) {
             board[i][w] = '';
           }
 

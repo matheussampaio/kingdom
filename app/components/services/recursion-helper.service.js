@@ -6,15 +6,16 @@
    * @license MIT
    */
   angular.module('kingdom')
-    .factory('RecursionHelper', ['$compile', function ($compile) {
+    .factory('RecursionHelper', ($compile) => {
       return {
         /**
          * Manually compiles the element, fixing the recursion loop.
          * @param element
-         * @param [link] A post-link function, or an object with function(s) registered via pre and post properties.
+         * @param [link] A post-link function, or an object with function(s) registered
+         *         via pre and post properties.
          * @returns An object containing the linking functions.
          */
-        compile: function (element, link) {
+        compile: (element, link) => {
           // Normalize the link parameter
           if (angular.isFunction(link)) {
             link = {
@@ -23,21 +24,22 @@
           }
 
           // Break the recursion loop by removing the contents
-          var contents = element.contents()
+          const contents = element.contents()
             .remove();
-          var compiledContents;
+          let compiledContents;
+
           return {
             pre: (link && link.pre) ? link.pre : null,
             /**
              * Compiles and re-adds the contents
              */
-            post: function (scope, element) {
+            post: (scope) => {
               // Compile the contents
               if (!compiledContents) {
                 compiledContents = $compile(contents);
               }
               // Re-add the compiled contents to the element
-              compiledContents(scope, function (clone) {
+              compiledContents(scope, (clone) => {
                 element.append(clone);
               });
 
@@ -49,6 +51,6 @@
           };
         }
       };
-    }]);
+    });
 
 })();

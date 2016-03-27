@@ -2,19 +2,15 @@
 
   angular
     .module('kingdom')
-    .directive('kingdomBest', KingdomBest);
-
-  function KingdomBest() {
-    return {
-      restrict: 'E',
+    .component('kingdomBest', {
       controller: KingdomBestController,
-      controllerAs: 'kingdomBestCtrl',
       templateUrl: 'kingdom-best/kingdom-best.html'
-    };
-  }
+    });
 
   function KingdomBestController(KingdomBestService) {
-    this.KingdomBestService = KingdomBestService;
+    const vm = this;
+
+    vm.KingdomBestService = KingdomBestService;
   }
 
 })();

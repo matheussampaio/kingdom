@@ -15,14 +15,14 @@
     return service;
 
     function copy(o) {
-      return JSON.parse(JSON.stringify(o));
+      return angular.fromJson(angular.toJson(o));
     }
 
     function makeMove(board, move) {
-      const x1 = move[1];
       const y1 = move[0];
-      const x2 = move[3];
+      const x1 = move[1];
       const y2 = move[2];
+      const x2 = move[3];
 
       const tmp = board[y1][x1];
       board[y1][x1] = board[y2][x2];

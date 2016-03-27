@@ -1,7 +1,8 @@
 (function () {
 
   angular.module('kingdom', [
-    'ui.router'
+    'ui.router',
+    'ngStorage'
   ]);
 
 })();
