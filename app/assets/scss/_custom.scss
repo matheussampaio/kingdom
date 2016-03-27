@@ -1,0 +1,45 @@
+.cell {
+  height: 25px;
+  width: 25px;
+  display: inline-block;
+  background: #ccc;
+}
+
+.cell.f {
+  background-image: url('../images/food.gif');
+  background-repeat: no-repeat;
+}
+
+.cell.g {
+  background-image: url('../images/gold.gif');
+  background-repeat: no-repeat;
+}
+
+.cell.w {
+  background-image: url('../images/wood.gif');
+  background-repeat: no-repeat;
+}
+
+.cell.s {
+  background-image: url('../images/sword.png');
+  background-repeat: no-repeat;
+}
+
+.cell.p {
+  background-image: url('../images/people.gif');
+  background-repeat: no-repeat;
+}
+
+.cell.h {
+  background-image: url('../images/hammer.gif');
+  background-repeat: no-repeat;
+}
+
+.cell.t {
+  background-image: url('../images/turn.gif');
+  background-repeat: no-repeat;
+}
+
+.indent {
+  margin-left: 60px;
+}

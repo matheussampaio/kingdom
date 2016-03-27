@@ -1,0 +1,14 @@
+<div class="cell" ng-repeat="cell in $ctrl.order"  ng-class="cell"></div>
+
+<div ng-show="$ctrl.KingdomGameService.turns">
+    {{$ctrl.KingdomGame.turns}} Turns
+</div>
+
+<div ng-repeat="row in $ctrl.KingdomGameService.board track by $index">
+    <div class="cell"
+         ng-repeat="type in row track by $index"
+         ng-class="type"
+         ng-click="$ctrl.swap($parent.$index, $index)"
+         title="{{$parent.$index}},{{$index}}">
+    </div>
+</div>
