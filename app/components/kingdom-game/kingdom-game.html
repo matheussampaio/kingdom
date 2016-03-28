@@ -1,7 +1,32 @@
-<kingdom-board></kingdom-board>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-7">
 
-<button ng-click="$ctrl.KingdomGameService.back()">Back</button>
-<button ng-click="$ctrl.KingdomGameService.digest()">Digest</button>
-<button ng-click="$ctrl.KingdomGameService.swap()">Swap</button>
+      <table class="board">
+        <tr>
+          <td class="cell" ng-repeat="cell in $ctrl.order" ng-click="$ctrl.setCells(cell)" ng-class="cell"></td>
+        </tr>
+      </table>
 
-<kingdom-best></kingdom-best>
+      <table class="board">
+        <tr ng-repeat="row in $ctrl.KingdomGameService.board track by $index">
+          <td class="cell"
+            ng-repeat="type in row track by $index"
+            ng-class="[type, { selected: $ctrl.isSelected($parent.$index, $index) }]"
+
+            ng-click="$ctrl.toggleCell($parent.$index, $index)"
+            title="{{ $parent.$index }}, {{ $index }}"></td>
+        </tr>
+      </table>
+
+      <button ng-click="$ctrl.KingdomGameService.back()">Back</button>
+      <button ng-click="$ctrl.KingdomGameService.digest()">Consume</button>
+      <button ng-click="$ctrl.KingdomGameService.swap()">Swap</button>
+
+    </div>
+
+    <div class="col-md-5">
+      <kingdom-best></kingdom-best>
+    </div>
+  </div>
+</div>
