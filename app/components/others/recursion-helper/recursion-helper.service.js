@@ -5,8 +5,8 @@
    * @author Mark Lagendijk
    * @license MIT
    */
-  angular.module('kingdom')
-    .factory('RecursionHelper', ($compile) => {
+  angular.module(`kingdom`)
+    .factory(`RecursionHelper`, ($compile) => {
       return {
         /**
          * Manually compiles the element, fixing the recursion loop.

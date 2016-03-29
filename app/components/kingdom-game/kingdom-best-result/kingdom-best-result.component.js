@@ -1,16 +1,16 @@
 (function () {
 
   angular
-    .module('kingdom')
-    .directive('kingdomBestResult', KingdomBestResult);
+    .module(`kingdom`)
+    .directive(`kingdomBestResult`, KingdomBestResult);
 
   function KingdomBestResult(RecursionHelper) {
     return {
-      restrict: 'E',
+      restrict: `E`,
       scope: {
-        result: '='
+        result: `=`
       },
-      templateUrl: 'kingdom-best-result/kingdom-best-result.html',
+      templateUrl: `kingdom-best-result/kingdom-best-result.html`,
       compile: (element) => {
         return RecursionHelper.compile(element, () => {});
       }

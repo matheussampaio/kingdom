@@ -4,7 +4,9 @@
     "angular"
   ],
   "env": {
-    "es6": true
+    "es6": true,
+    "jasmine": true,
+    "browser": true
   },
   "rules": {
     "wrap-iife": 0,
@@ -17,6 +19,9 @@
     "no-console": 0,
     "no-use-before-define": 0,
     "object-shorthand": 0,
-    "angular/no-service-method": 0
+    "quotes": [error, "backtick", "avoid-escape"]
+  },
+  "globals": {
+    "inject": true
   }
 }

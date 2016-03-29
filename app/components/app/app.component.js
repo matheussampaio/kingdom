@@ -1,10 +1,10 @@
 (function () {
 
   angular
-    .module('kingdom')
-    .component('app', {
+    .module(`kingdom`)
+    .component(`app`, {
       controller: AppController,
-      templateUrl: 'app/app.html'
+      templateUrl: `app/app.html`
     });
 
   function AppController() {

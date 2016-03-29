@@ -66,24 +66,24 @@ gulp.task('build:lint', () => {
 
 gulp.task('build:js', () => {
   return gulp.src([
-      'app.module.js',
-      'app.config.js',
-      '**/*.module.js',
-      '**/*.config.js',
-      '**/*.js',
-      '!**/*.spec.js'
-    ], {
-      cwd: 'app/'
-    })
-    .pipe(plugins.plumber())
-    .pipe(plugins.babel({
-      presets: ['es2015']
-    }))
-    .pipe(plugins.ngAnnotate())
-    .pipe(gulp.dest('www/app'))
-    .pipe(browserSync.stream({
-      match: '**/*.js'
-    }));
+    'app.module.js',
+    'app.config.js',
+    '**/*.module.js',
+    '**/*.config.js',
+    '**/*.js'
+    // '!**/*.spec.js'
+  ], {
+    cwd: 'app/'
+  })
+  .pipe(plugins.plumber())
+  .pipe(plugins.babel({
+    presets: ['es2015']
+  }))
+  .pipe(plugins.ngAnnotate())
+  .pipe(gulp.dest('www/app'))
+  .pipe(browserSync.stream({
+    match: '**/*.js'
+  }));
 });
 
 gulp.task('build:js:server', () => {
@@ -152,8 +152,7 @@ gulp.task('build:inject', ['build:pre:inject'], () => {
     '**/*.constants.js',
     '**/*.service.js',
     '**/*.factory.js',
-    '**/*.*.js',
-    '*.js'
+    '**/!(*.spec).js'
   ];
 
   const scriptFiles = jsFiles.map(file => `app/${file}`);

@@ -7,11 +7,11 @@
    * @name Lodash
    */
   angular
-    .module('kingdom')
-    .factory('_', Lodash);
+    .module(`kingdom`)
+    .factory(`_`, Lodash);
 
   /**
-    * Expose Lo-Dash through injectable factory, so we don't pollute / rely on global namespace
+    * Expose Lo-Dash through injectable factory, so we don`t pollute / rely on global namespace
     * just inject lodash as Lodash.
     *
     * @ngdoc factory

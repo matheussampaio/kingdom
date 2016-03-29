@@ -1,15 +1,16 @@
 (function () {
 
   angular
-    .module('kingdom')
-    .service('KingdomUtilsService', KingdomUtilsService);
+    .module(`kingdom`)
+    .service(`KingdomUtilsService`, KingdomUtilsService);
 
   function KingdomUtilsService() {
     const service = {
+      moves: moves(),
       makeMove: makeMove,
       getMoves: getMoves,
       copy: copy,
-      order: ['w', 's', 'g', 't', 'p', 'h', 'f']
+      order: [`w`, `s`, `g`, `t`, `p`, `h`, `f`]
     };
 
     return service;
@@ -32,6 +33,10 @@
     }
 
     function getMoves() {
+      return moves;
+    }
+
+    function moves() {
       return [
         [0, 0, 0, 1],
         [0, 0, 1, 0],
