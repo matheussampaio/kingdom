@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-7">
+    <div class="col-md-4">
 
       <table class="board">
         <tr>
@@ -25,13 +25,39 @@
 
     </div>
 
-    <div class="col-md-5">
+    <div class="col-md-8">
       <input ng-model="$ctrl.KingdomBestService.searchDeep"></input>
 
       <button ng-click="$ctrl.KingdomBestService.searchBest()">Best</button>
 
-      <kingdom-best-result result="$ctrl.KingdomBestService.bestResult.child">
-      </kingdom-best-result>
+      <table class="table">
+        <thead>
+          <tr>
+            <td>Moves</td>
+            <td>Gold</td>
+            <td>Wood</td>
+            <td>Food</td>
+            <td>Sword</td>
+            <td>Hammer</td>
+            <td>Person</td>
+            <td>Turn</td>
+            <td>Score</td>
+          </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="record in $ctrl.KingdomBestService.results | orderBy:'-score'">
+          <td ng-bind="record.moves.length"></td>
+          <td ng-bind="record.total.g"></td>
+          <td ng-bind="record.total.w"></td>
+          <td ng-bind="record.total.f"></td>
+          <td ng-bind="record.total.s"></td>
+          <td ng-bind="record.total.h"></td>
+          <td ng-bind="record.total.p"></td>
+          <td ng-bind="record.total.t"></td>
+          <td ng-bind="record.score"></td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

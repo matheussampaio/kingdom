@@ -4,7 +4,7 @@
     .module(`kingdom`)
     .service(`KingdomUtilsService`, KingdomUtilsService);
 
-  function KingdomUtilsService() {
+  function KingdomUtilsService(_) {
     const service = {
       moves: moves(),
       makeMove: makeMove,
@@ -20,16 +20,22 @@
     }
 
     function makeMove(board, move) {
+      const _board = _.cloneDeep(board);
+
       const y1 = move[0];
       const x1 = move[1];
       const y2 = move[2];
       const x2 = move[3];
 
-      const tmp = board[y1][x1];
-      board[y1][x1] = board[y2][x2];
-      board[y2][x2] = tmp;
+      if (_board[y1][x1] === `` || _board[y2][x2] === ``) {
+        return { valid: false };
+      }
 
-      return board;
+      const tmp = _board[y1][x1];
+      _board[y1][x1] = _board[y2][x2];
+      _board[y2][x2] = tmp;
+
+      return { board: _board, valid: true };
     }
 
     function getMoves() {

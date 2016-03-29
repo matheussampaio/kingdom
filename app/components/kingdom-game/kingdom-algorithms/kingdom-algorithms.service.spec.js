@@ -37,7 +37,7 @@ describe(`KingdomAlgorithmsService`, () => {
       ];
 
       KingdomAlgorithmsService
-        .gravity(board)
+        .gravity({ board })
         .then((result) => {
           expect(_.isEqual(result, resultExpected)).toBeTruthy();
           done();
@@ -57,7 +57,7 @@ describe(`KingdomAlgorithmsService`, () => {
       ];
 
       KingdomAlgorithmsService
-        .gravity(board)
+        .gravity({ board })
         .then((result) => {
           expect(_.isEqual(board, result)).toBeFalsy();
           done();
@@ -79,7 +79,7 @@ describe(`KingdomAlgorithmsService`, () => {
       ];
 
       KingdomAlgorithmsService
-        .consumeRow(board)
+        .consumeRow({ board })
         .then((result) => {
 
           expect(result.change).toBeFalsy();
@@ -120,13 +120,51 @@ describe(`KingdomAlgorithmsService`, () => {
       };
 
       KingdomAlgorithmsService
-        .consumeRow(board)
+        .consumeRow({ board })
         .then((result) => {
 
           expect(result.change).toBeTruthy();
           expect(_.isEqual(board, result.board)).toBeFalsy();
           expect(_.isEqual(expectedBoard, result.board)).toBeTruthy();
           expect(_.isEqual(expectedProduction, result.production)).toBeTruthy();
+
+          done();
+        });
+    });
+  });
+
+  describe(`#digest`, () => {
+    it(`shouldn't consume and gravity`, (done) => {
+      const board = [
+        [`f`, `g`, `h`, `f`, `h`, `w`, `w`, `f`],
+        [`p`, `t`, `w`, `f`, `f`, `t`, `f`, `t`],
+        [`t`, `t`, `h`, `s`, `t`, `p`, `w`, `t`],
+        [`f`, `g`, `h`, `h`, `f`, `h`, `f`, `s`],
+        [`s`, `p`, `h`, `g`, `f`, `t`, `w`, `t`],
+        [`g`, `p`, `s`, `p`, `t`, `s`, `h`, `g`],
+        [`t`, `f`, `f`, `h`, `g`, `g`, `g`, `g`],
+        [`p`, `f`, `s`, `t`, `w`, `h`, `p`, `t`]
+      ];
+
+      const expectedBoard = [
+        [`f`, `g`, ``, `f`, ``, ``, ``, ``],
+        [`p`, `t`, ``, `f`, `h`, `w`, `w`, `f`],
+        [`t`, `t`, ``, `s`, `f`, `t`, `f`, `t`],
+        [`f`, `g`, `h`, `h`, `t`, `p`, `w`, `t`],
+        [`s`, `p`, `w`, `g`, `f`, `h`, `f`, `s`],
+        [`g`, `p`, `s`, `p`, `f`, `t`, `w`, `t`],
+        [`t`, `f`, `f`, `h`, `t`, `s`, `h`, `g`],
+        [`p`, `f`, `s`, `t`, `w`, `h`, `p`, `t`]
+      ];
+
+      KingdomAlgorithmsService
+        .digest({ board })
+        .then((result) => {
+
+          expect(result.change).toBeFalsy();
+          expect(_.isEqual(board, result.board)).toBeFalsy();
+          expect(_.isEqual(expectedBoard, result.board)).toBeTruthy();
+          expect(_.isEqual({ h: 3, g: 4 }, result.production)).toBeTruthy();
 
           done();
         });

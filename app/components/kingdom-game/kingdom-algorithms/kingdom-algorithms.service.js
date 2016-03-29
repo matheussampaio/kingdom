@@ -18,7 +18,7 @@
     //////////////////
 
     function digest({ board, production = {}, iterations = 0 }) {
-      return gravity(board)
+      return gravity({ board })
         .then((boardGravity) => {
           return consume({ board: boardGravity, production });
         })
@@ -32,34 +32,18 @@
 
           return Promise.resolve(result);
         });
-
-
-      // return new Promise((resolve) => {
-      //   consume({ board, production })
-      //     .then((result) => {
-      //       if (result.change) {
-      //         gravity(result.board)
-      //           .then((boardGravity) => {
-      //             return digest(boardGravity, result.production);
-      //           })
-      //           .then(resolve);
-      //       }
-      //
-      //       resolve(result);
-      //     });
-      // });
     }
 
-    function gravity(board) {
-      const tmpBoard = _.cloneDeep(board);
+    function gravity({ board }) {
+      const _board = _.cloneDeep(board);
 
       return new Promise((resolve) => {
         for (let col = 0; col < 8; col++) {
           const colElements = [];
 
           for (let row = 0; row < 8; row++) {
-            if (board[row][col] !== ``) {
-              colElements.push(board[row][col]);
+            if (_board[row][col] !== ``) {
+              colElements.push(_board[row][col]);
             }
           }
 
@@ -68,11 +52,11 @@
           }
 
           for (let row = 0; row < 8; row++) {
-            tmpBoard[row][col] = colElements[row];
+            _board[row][col] = colElements[row];
           }
         }
 
-        resolve(tmpBoard);
+        resolve(_board);
       });
     }
 
@@ -92,15 +76,15 @@
       });
     }
 
-    function consumeColumn({ board, production }) {
-      const tmpBoard = _.cloneDeep(board);
+    function consumeColumn({ board, production = {} }) {
+      const _board = _.cloneDeep(board);
       let change = false;
       let start = -1;
       let count = 1;
 
       for (let x = 0; x < 8; x++) {
         for (let y = 0; y < 7; y++) {
-          if (board[y][x] !== `` && board[y][x] === board[y + 1][x]) {
+          if (_board[y][x] !== `` && _board[y][x] === _board[y + 1][x]) {
             if (start === -1) {
               start = y;
             }
@@ -108,14 +92,14 @@
 
           } else {
             if (count >= 3) {
-              if (production[board[y][x]]) {
-                production[board[y][x]] += count;
+              if (production[_board[y][x]]) {
+                production[_board[y][x]] += count;
               } else {
-                production[board[y][x]] = count;
+                production[_board[y][x]] = count;
               }
 
               for (let y2 = start; y2 < start + count; y2++) {
-                tmpBoard[y2][x] = ``;
+                _board[y2][x] = ``;
               }
 
               change = true;
@@ -130,14 +114,14 @@
 
         if (count >= 3) {
 
-          if (production[board[y][x]]) {
-            production[board[y][x]] += count;
+          if (production[_board[y][x]]) {
+            production[_board[y][x]] += count;
           } else {
-            production[board[y][x]] = count;
+            production[_board[y][x]] = count;
           }
 
           for (let y2 = start; y2 < start + count; y2++) {
-            tmpBoard[y2][x] = ``;
+            _board[y2][x] = ``;
           }
 
           change = true;
@@ -147,11 +131,11 @@
         count = 1;
       }
 
-      return Promise.resolve({ change, board: tmpBoard, production });
+      return Promise.resolve({ change, board: _board, production });
     }
 
     function consumeRow({ board, production = {} }) {
-      const tmpBoard = _.cloneDeep(board);
+      const _board = _.cloneDeep(board);
       let change = false;
 
       // Consume ROW
@@ -160,7 +144,7 @@
 
       for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 7; j++) {
-          if (board[i][j] !== `` && board[i][j] === board[i][j + 1]) {
+          if (_board[i][j] !== `` && _board[i][j] === _board[i][j + 1]) {
             if (start === -1) {
               start = j;
             }
@@ -168,14 +152,14 @@
 
           } else {
             if (count >= 3) {
-              if (production[board[i][j]]) {
-                production[board[i][j]] += count;
+              if (production[_board[i][j]]) {
+                production[_board[i][j]] += count;
               } else {
-                production[board[i][j]] = count;
+                production[_board[i][j]] = count;
               }
 
               for (let k = start; k < start + count; k++) {
-                tmpBoard[i][k] = ``;
+                _board[i][k] = ``;
               }
 
               change = true;
@@ -191,14 +175,14 @@
         if (count >= 3) {
           // remove elements and add production
 
-          if (production[board[i][j]]) {
-            production[board[i][j]] += count;
+          if (production[_board[i][j]]) {
+            production[_board[i][j]] += count;
           } else {
-            production[board[i][j]] = count;
+            production[_board[i][j]] = count;
           }
 
           for (let w = start; w < start + count; w++) {
-            tmpBoard[i][w] = ``;
+            _board[i][w] = ``;
           }
 
           change = true;
@@ -208,7 +192,7 @@
         count = 1;
       }
 
-      return Promise.resolve({ change, board: tmpBoard, production });
+      return Promise.resolve({ change, board: _board, production });
     }
   }
 

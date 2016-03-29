@@ -1,10 +1,12 @@
-table, th, td {
+table.board {
+  align: center;
   border: 1px solid black;
   border-collapse: collapse;
-}
 
-table {
-  align: center;
+  > th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
 }
 
 .cell {
