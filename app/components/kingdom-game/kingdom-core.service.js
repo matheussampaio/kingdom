@@ -1,41 +1,25 @@
 (function () {
 
-  angular
-    .module(`kingdom`)
-    .service(`KingdomAlgorithmsService`, KingdomAlgorithmsService);
-
-  function KingdomAlgorithmsService(_) {
-    const service = {
-      gravity: gravity,
-      consume: consume,
-      digest: digest,
-      consumeRow: consumeRow,
-      consumeColumn: consumeColumn
-    };
-
-    return service;
-
-    //////////////////
-
-    function digest({ board, production = {}, iterations = 0 }) {
-      return gravity({ board })
+  class KingdomCoreService {
+    digest({ board, production = {}, iterations = 0 }) {
+      return this.gravity({ board })
         .then((boardGravity) => {
-          return consume({ board: boardGravity, production });
+          return this.consume({ board: boardGravity, production });
         })
         .then((result) => {
           result.iterations = iterations;
 
           if (result.change) {
             result.iterations++;
-            return digest(result);
+            return this.digest(result);
           }
 
           return Promise.resolve(result);
         });
     }
 
-    function gravity({ board }) {
-      const _board = _.cloneDeep(board);
+    gravity({ board }) {
+      const _board = JSON.parse(JSON.stringify(board));
 
       return new Promise((resolve) => {
         for (let col = 0; col < 8; col++) {
@@ -60,14 +44,14 @@
       });
     }
 
-    function consume({ board, production }) {
+    consume({ board, production }) {
       let rowChange = false;
 
       return new Promise((resolve) => {
-        consumeRow({ board, production })
+        this.consumeRow({ board, production })
           .then((result) => {
             rowChange = result.change;
-            return consumeColumn(result);
+            return this.consumeColumn(result);
           })
           .then((result) => {
             result.change = result.change || rowChange;
@@ -76,8 +60,8 @@
       });
     }
 
-    function consumeColumn({ board, production = {} }) {
-      const _board = _.cloneDeep(board);
+    consumeColumn({ board, production = {} }) {
+      const _board = JSON.parse(JSON.stringify(board));
       let change = false;
       let start = -1;
       let count = 1;
@@ -134,8 +118,8 @@
       return Promise.resolve({ change, board: _board, production });
     }
 
-    function consumeRow({ board, production = {} }) {
-      const _board = _.cloneDeep(board);
+    consumeRow({ board, production = {} }) {
+      const _board = JSON.parse(JSON.stringify(board));
       let change = false;
 
       // Consume ROW
@@ -195,5 +179,9 @@
       return Promise.resolve({ change, board: _board, production });
     }
   }
+
+  angular
+    .module(`kingdom`)
+    .service(`KingdomCoreService`, KingdomCoreService);
 
 })();

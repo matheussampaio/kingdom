@@ -7,16 +7,22 @@
       templateUrl: `kingdom-game/kingdom-game.html`
     });
 
-  function KingdomGameController(KingdomGameService, KingdomUtilsService, KingdomBestService) {
+  function KingdomGameController(KingdomGameService, KingdomCoreService, $rootScope) {
     const vm = this;
 
-    vm.KingdomGameService = KingdomGameService;
-    vm.KingdomBestService = KingdomBestService;
+    vm.kingdom = KingdomGameService;
 
-    vm.order = KingdomUtilsService.order;
-    vm.setCells = KingdomGameService.setCells;
-    vm.toggleCell = KingdomGameService.toggleCell;
-    vm.isSelected = KingdomGameService.isSelected;
+    vm.digest = digest;
+
+    ////////////////
+
+    function digest() {
+      KingdomCoreService.digest({ board: KingdomGameService.board })
+        .then((result) => {
+          KingdomGameService.board = result.board;
+          $rootScope.$digest();
+        });
+    }
   }
 
 })();

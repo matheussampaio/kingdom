@@ -4,33 +4,33 @@
 
       <table class="board">
         <tr>
-          <td class="cell" ng-repeat="cell in $ctrl.order" ng-click="$ctrl.setCells(cell)" ng-class="cell"></td>
+          <td class="cell" ng-repeat="cell in $ctrl.kingdom.types" ng-click="$ctrl.kingdom.setCells(cell)" ng-class="cell"></td>
         </tr>
       </table>
 
       <table class="board">
-        <tr ng-repeat="row in $ctrl.KingdomGameService.board track by $index">
+        <tr ng-repeat="row in $ctrl.kingdom.board track by $index">
           <td class="cell"
             ng-repeat="type in row track by $index"
-            ng-class="[type, { selected: $ctrl.isSelected($parent.$index, $index) }]"
+            ng-class="[type, { selected: $ctrl.kingdom.isSelected($parent.$index, $index) }]"
 
-            ng-click="$ctrl.toggleCell($parent.$index, $index)"
-            title="{{ $parent.$index }}, {{ $index }}"></td>
+            ng-click="$ctrl.kingdom.toggleCell($parent.$index, $index)"
+            title="{{ $index }}, {{ $parent.$index }}"></td>
         </tr>
       </table>
 
-      <button ng-click="$ctrl.KingdomGameService.back()">Back</button>
-      <button ng-click="$ctrl.KingdomGameService.digest()">Consume</button>
-      <button ng-click="$ctrl.KingdomGameService.swap()">Swap</button>
+      <button ng-click="$ctrl.kingdom.back()">Back</button>
+      <button ng-click="$ctrl.digest()">Consume</button>
+      <button ng-click="$ctrl.kingdom.swap()">Swap</button>
 
     </div>
 
     <div class="col-md-8">
-      <input ng-model="$ctrl.KingdomBestService.searchDeep"></input>
+      <div>IT: {{$ctrl.kingdom.count}}  -  LEFT: {{$ctrl.kingdom.consume.length}} - SOLUTION: {{$ctrl.kingdom.results.length}} - SOLUTION: {{$ctrl.kingdom.moveslength}}</div>
+      <button ng-hide="$ctrl.kingdom.searching" ng-click="$ctrl.kingdom.best()">Best</button>
+      <button ng-show="$ctrl.kingdom.searching" ng-click="$ctrl.kingdom.stop()">Stop</button>
 
-      <button ng-click="$ctrl.KingdomBestService.searchBest()">Best</button>
-
-      <table class="table">
+      <table ng-if="$ctrl.kingdom.results.length > 0 && !$ctrl.kingdom.searching" class="table">
         <thead>
           <tr>
             <td>Moves</td>
@@ -45,8 +45,10 @@
           </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="record in $ctrl.KingdomBestService.results | orderBy:'-score'">
-          <td ng-bind="record.moves.length"></td>
+        <tr ng-repeat="record in $ctrl.kingdom.results | orderBy:'-score' | limitTo:'25'">
+          <td>
+            <span ng-repeat="move in record.moves">[{{move.from.x}},{{move.from.y}}->{{move.to.x}},{{move.to.y}}] </span>
+          </td>
           <td ng-bind="record.total.g"></td>
           <td ng-bind="record.total.w"></td>
           <td ng-bind="record.total.f"></td>
