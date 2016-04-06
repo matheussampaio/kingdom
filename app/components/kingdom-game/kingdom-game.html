@@ -22,25 +22,61 @@
       <button ng-click="$ctrl.kingdom.back()">Back</button>
       <button ng-click="$ctrl.digest()">Consume</button>
       <button ng-click="$ctrl.kingdom.swap()">Swap</button>
+      <button ng-click="$ctrl.kingdom.reset()">Reset</button>
 
     </div>
 
     <div class="col-md-8">
       <div>IT: {{$ctrl.kingdom.count}}  -  LEFT: {{$ctrl.kingdom.consume.length}} - SOLUTION: {{$ctrl.kingdom.results.length}} - SOLUTION: {{$ctrl.kingdom.moveslength}}</div>
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="gold">Gold</label>
+          <input id="gold" type="text" class="form-control" ng-model="$ctrl.kingdom.weight.g">
+        </div>
+        <div class="form-group">
+          <label for="gold">Wood</label>
+          <input id="gold" type="text" class="form-control" ng-model="$ctrl.kingdom.weight.w">
+        </div>
+        <div class="form-group">
+          <label for="gold">Food</label>
+          <input id="gold" type="number" class="form-control" ng-model="$ctrl.kingdom.weight.f">
+        </div>
+        <div class="form-group">
+          <label for="gold">Turn</label>
+          <input id="gold" type="number" class="form-control" ng-model="$ctrl.kingdom.weight.t">
+        </div>
+        <div class="form-group">
+          <label for="gold">Hammer</label>
+          <input id="gold" type="number" class="form-control" ng-model="$ctrl.kingdom.weight.h">
+        </div>
+        <div class="form-group">
+          <label for="gold">Sword</label>
+          <input id="gold" type="number" class="form-control" ng-model="$ctrl.kingdom.weight.s">
+        </div>
+        <div class="form-group">
+          <label for="gold">Person</label>
+          <input id="gold" type="number" class="form-control" ng-model="$ctrl.kingdom.weight.p">
+        </div>
+        <div class="form-group">
+          <label for="gold">Move</label>
+          <input id="gold" type="number" class="form-control" ng-model="$ctrl.kingdom.weight.m">
+        </div>
+      </form>
       <button ng-hide="$ctrl.kingdom.searching" ng-click="$ctrl.kingdom.best()">Best</button>
       <button ng-show="$ctrl.kingdom.searching" ng-click="$ctrl.kingdom.stop()">Stop</button>
+      <button ng-hide="$ctrl.kingdom.searching" ng-click="$ctrl.kingdom.calculateScore()">Score</button>
 
       <table ng-if="$ctrl.kingdom.results.length > 0 && !$ctrl.kingdom.searching" class="table">
         <thead>
           <tr>
             <td>Moves</td>
-            <td>Gold</td>
+            <!-- <td>Gold</td>
             <td>Wood</td>
             <td>Food</td>
             <td>Sword</td>
             <td>Hammer</td>
             <td>Person</td>
-            <td>Turn</td>
+            <td>Turn</td> -->
             <td>Score</td>
           </tr>
         </thead>
@@ -49,13 +85,13 @@
           <td>
             <span ng-repeat="move in record.moves">[{{move.from.x}},{{move.from.y}}->{{move.to.x}},{{move.to.y}}] </span>
           </td>
-          <td ng-bind="record.total.g"></td>
+          <!-- <td ng-bind="record.total.g"></td>
           <td ng-bind="record.total.w"></td>
           <td ng-bind="record.total.f"></td>
           <td ng-bind="record.total.s"></td>
           <td ng-bind="record.total.h"></td>
           <td ng-bind="record.total.p"></td>
-          <td ng-bind="record.total.t"></td>
+          <td ng-bind="record.total.t"></td> -->
           <td ng-bind="record.score"></td>
         </tr>
         </tbody>

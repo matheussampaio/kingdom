@@ -5,7 +5,7 @@ class Algorithm {
     this.count = 0;
   }
 
-  best(board, moves = []) {
+  best({ board, moves = []}) {
     return Promise.all(this.utils.moves.map((move) => {
       const moveResult = this.utils.makeMove(board, move);
 
@@ -31,32 +31,32 @@ class Algorithm {
                 resources: result.production
               });
 
-              const total = {
-                g: 0, // gold
-                w: 0, // wood
-                h: 0, // hammer
-                p: 0, // person
-                t: 0, // turn
-                s: 0, // sword
-                f: 0  // food
-              };
-
-              let score = 0;
-
-              movesWithThisIterations.forEach((m) => {
-                for (let prop in m.resources) {
-                  total[prop] += m.resources[prop];
-                  score += m.resources[prop];
-                }
-              });
+              // const total = {
+              //   g: 0, // gold
+              //   w: 0, // wood
+              //   h: 0, // hammer
+              //   p: 0, // person
+              //   t: 0, // turn
+              //   s: 0, // sword
+              //   f: 0  // food
+              // };
+              //
+              // let score = 0;
+              //
+              // movesWithThisIterations.forEach((m) => {
+              //   for (let prop in m.resources) {
+              //     total[prop] += m.resources[prop];
+              //     score += m.resources[prop];
+              //   }
+              // });
 
               postMessage({
                 event: `data`,
                 data: {
                   board: result.board,
                   moves: movesWithThisIterations,
-                  total,
-                  score
+                  // total,
+                  // score
                 }
               });
             }

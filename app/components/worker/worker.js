@@ -11,7 +11,7 @@ if (`function` === typeof importScripts) {
 
 onmessage = function (e) {
   if (algorithm !== null) {
-    algorithm.best(e.data.msg.board, e.data.msg.moves).then(() => {
+    algorithm.best(e.data.msg).then(() => {
       postMessage({
         event: `end`
       });

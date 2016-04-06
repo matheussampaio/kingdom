@@ -21,6 +21,7 @@
       types: [`w`, `s`, `g`, `t`, `p`, `h`, `f`],
       selected: [],
       results: [],
+      reset: reset,
       best: best,
       digest: digest,
       back: back,
@@ -30,8 +31,17 @@
       toggleCell: toggleCell,
       setCells: setCells,
       isSelected: isSelected,
-
-
+      calculateScore: calculateScore,
+      weight: {
+        g: 1,
+        w: 1,
+        h: 1,
+        f: 1,
+        t: 1,
+        p: 1,
+        s: 1,
+        m: -3
+      },
       consume: []
     };
 
@@ -71,7 +81,7 @@
             service.consume.push(e.data.data);
           },
           onfinish: () => {
-            $rootScope.$digest();
+            _refresh();
             _more();
           }
         }));
@@ -82,11 +92,34 @@
       service.searching = false;
     }
 
+    function calculateScore() {
+      for (const result of service.results) {
+        result.score = 0;
+
+        for (const move of result.moves) {
+          for (const prop of Object.keys(move.resources)) {
+            result.score += move.resources[prop] * parseInt(service.weight[prop], 10);
+          }
+
+          result.score += parseInt(service.weight.m, 10);
+        }
+
+      }
+
+      _refresh();
+    }
+
+    function _refresh() {
+      if (!$rootScope.$$phase) {
+        $rootScope.$digest();
+      }
+    }
+
     function _more() {
       if (!service.searching) {
         console.log(`stop!`);
       } else if (service.consume.length === 0) {
-        service.searching = false;
+        // service.searching = false;
         console.log(`noting more to consume`);
       } else if (service.count++ >= 100000) {
         service.searching = false;
@@ -101,7 +134,8 @@
 
           worker.postMessage({
             board: r.board,
-            moves: r.moves
+            moves: r.moves,
+            weight: service.weight
           });
 
           _more();
@@ -194,6 +228,17 @@
 
         _save();
       }
+    }
+
+    function reset() {
+      service.board.forEach((row, y) => {
+        row.forEach((col, x) => {
+          service.board[y][x] = '';
+        });
+      });
+
+      _save();
+      _refresh();
     }
 
   }
